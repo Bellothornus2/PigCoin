@@ -24,7 +24,21 @@ public class Transaction {
         this.message = message;
     }
     //getters
-
+    double getPigCoins(){
+        return this.pigCoins;
+    }
+    PublicKey getPKeyRecipient(){
+        return this.pKeyRecipient;
+    }
+    PublicKey getPKeySender(){
+        return this.pKeySender;
+    }
+    String getHash(){
+        return this.hash;
+    }
+    String getPrevHash(){
+        return this.prevHash;
+    }
     //setters
 
     //Overrides
