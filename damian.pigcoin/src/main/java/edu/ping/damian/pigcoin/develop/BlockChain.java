@@ -13,9 +13,16 @@ public class BlockChain {
         return this.blockChain;
     }
     void summarize(){
-        for (Transaction transaction : this.blockChain) {
+        ////// ZONA DE PRUEBAS
+        this.getBlockChain().stream().forEach(
+            t -> System.out.print(t.toString())
+        );
+        ///// FIN ZONA DE PRUEBAS
+        /*
+        for (Transaction transaction : this.getBlockChain()) {
             System.out.print(transaction.toString());
         }
+        */
     }
     void summarize(int position){
         System.out.print(this.blockChain.get(position).toString());

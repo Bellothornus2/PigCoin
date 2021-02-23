@@ -42,7 +42,7 @@ public class Wallet {
         return this.outputTransactions;
     }
     HashMap<String,Double> collectCoins(Double pigCoins){
-        //esto no tiene ni puto sentido
+        //TODO: esto no tiene ni puto sentido
         HashMap<String, Double> temporalMap = new HashMap<>();
         List<Transaction> allTransaction = this.inputTransactions;
         allTransaction.addAll(this.outputTransactions);
@@ -79,6 +79,19 @@ public class Wallet {
         this.balance = balance;
     }
     void loadCoins(BlockChain blockChain){
+        ////// ZONA DE PRUEBAS
+        blockChain.getBlockChain().stream().filter(
+            t -> t.getPKeyRecipient().equals(this.getAddress())).forEach(
+                n -> this.setTotalInput(n.getPigCoins())
+            );
+        blockChain.getBlockChain().stream().filter(
+            t -> t.getPKeySender().equals(this.getAddress())).forEach(
+                n -> this.setTotalOutput(n.getPigCoins())
+            );
+        double balanceNow = this.getTotalInput() -this.getTotalOutput();
+        this.setBalance(balanceNow);
+        ///// FIN ZONA DE PRUEBAS
+        /*
         for (Transaction transaction : blockChain.getBlockChain()) {
             if (transaction.getPKeyRecipient() == this.getAddress()){
                 this.setTotalInput(transaction.getPigCoins());
@@ -90,20 +103,39 @@ public class Wallet {
                 this.setBalance(balanceNow);
             }
         }
+        */
     }
     void loadInputTransactions(BlockChain blockChain){
+        ////// ZONA DE PRUEBAS
+        blockChain.getBlockChain().stream().filter(
+            t -> t.getPKeyRecipient().equals(this.getAddress())
+        ).forEach(
+            n -> this.getInputTransactions().add(n)
+        );
+        ///// FIN ZONA DE PRUEBAS
+        /*
         for (Transaction transaction : blockChain.getBlockChain()) {
             if (transaction.getPKeyRecipient() == this.getAddress()){
                 this.getInputTransactions().add(transaction);
             }
         }
+        */
     }
     void loadOutputTransactions(BlockChain blockChain){
+        ////// ZONA DE PRUEBAS
+        blockChain.getBlockChain().stream().filter(
+            t -> t.getPKeySender().equals(this.getAddress())
+        ).forEach(
+            n -> this.getOutputTransactions().add(n)
+        );
+        ///// FIN ZONA DE PRUEBAS
+        /*
         for (Transaction transaction : blockChain.getBlockChain()) {
             if (transaction.getPKeySender() == this.getAddress()){
                 this.getOutputTransactions().add(transaction);
             }
         }
+        */
     }
 
     //Overrides
